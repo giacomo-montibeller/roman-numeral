@@ -1,18 +1,18 @@
 defmodule RomanNumeral do
-  @moduledoc """
-  Documentation for `RomanNumeral`.
-  """
 
-  @doc """
-  Hello world.
+  @numerals [{10, "X"}, {9, "IX"}, {5, "V"}, {4, "IV"}, {1, "I"}]
 
-  ## Examples
+  def converts(number), do: converts(number, @numerals)
 
-      iex> RomanNumeral.hello()
-      :world
+  defp converts(number, _) when number < 1 do
+    ""
+  end
 
-  """
-  def hello do
-    :world
+  defp converts(number, [{arabic, roman} | tail]) when number >= arabic do
+    roman <> converts(number - arabic, [{arabic, roman} | tail])
+  end
+
+  defp converts(number, [_ | tail]) do
+    converts(number, tail)
   end
 end
